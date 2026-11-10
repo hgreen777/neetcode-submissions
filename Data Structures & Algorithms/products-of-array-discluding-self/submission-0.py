@@ -1,0 +1,31 @@
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        output = []
+        prefix = 1 # Increases
+        suffix = 1 # Decreases
+        previous_num = 1
+        zeroes = []
+        for i,n in enumerate(nums):
+            if n != 0:
+                suffix *= n
+            else:
+                zeroes.append(i)
+
+        for i, current_num in enumerate(nums):
+            if len(zeroes) > 1:
+                output.append(0)
+            elif i in zeroes or len(zeroes) == 0:
+                prefix *= previous_num
+                suffix /= (
+                    current_num
+                    if current_num != 0
+                    else 1
+                )
+                output.append(int(prefix * suffix))
+
+                previous_num = current_num
+            else:
+                output.append(0)
+
+        return output
+        
